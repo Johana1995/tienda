@@ -150,3 +150,8 @@ ALTER TABLE persona ADD CONSTRAINT FK_persona_genero
 ALTER TABLE empleado ADD CONSTRAINT FK_empleado_rol
 FOREIGN KEY (rol_id) REFERENCES cargo (id)
 ;
+
+SELECT p.id as persona_id,p.apellido,p.nombre,p.direccion,p.nacimiento,p.genero_id,
+                  e.id as empleado_id,e.correo,e.username , e.password,e.rol_id,g.descripcion as genero,c.nombre as cargo
+                from persona p, empleado e,genero g,cargo c
+                WHERE p.id=e.persona_id and g.id=p.genero_id and c.id=e.rol_id
