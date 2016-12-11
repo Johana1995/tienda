@@ -147,4 +147,6 @@ ALTER TABLE persona ADD CONSTRAINT FK_persona_genero
 	FOREIGN KEY (genero_id) REFERENCES genero (id)
 ;
 
-
+ALTER TABLE empleado ADD CONSTRAINT FK_empleado_rol
+FOREIGN KEY (rol_id) REFERENCES cargo (id)
+;

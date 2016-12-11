@@ -1,93 +1,99 @@
 <?php
 require 'models/Empleado.php';
+require 'models/Cargo.php';
+require 'models/Genero.php';
 class EmpleadoController extends Controller
 {
     public function indexAction()
     {
         $model = new Empleado();
         $empleados = $model->listar();
-        return $this->view->show('producto/index',['empleados' => $empleados]);
+        return $this->view->show('empleado/index',[
+            'empleados' => $empleados
+        ]);
     }
     public function createAction()
     {
         if(!empty($_POST))
         {
-            $persona=new Persona();
+            $persona=new Empleado();
             $persona->apellido=$_POST['apellido'];
             $persona->nombre=$_POST['nombre'];
             $persona->direccion=$_POST['direccion'];
             $persona->nacimiento=$_POST['nacimiento'];
             $persona->genero_id=$_POST['genero'];
-            $persona_id=$persona->crear();
 
 
-            $empleado= new Empleado();
-            $empleado->persona_id=$persona_id;
-            $empleado->correo=$_POST['correo'];
-            $empleado->username=$_POST['username'];
-            $empleado->password=$_POST['password'];
-            $empleado->rol_id=$_POST['rol'];;
-            $empleado->crear();
-            header('Location: index.php?controller=Producto&action=index');
+            $persona->correo=$_POST['correo'];
+            $persona->username=$_POST['username'];
+            $persona->password=$_POST['password'];
+            $persona->rol_id=$_POST['rol'];;
+            $persona->crear();
+            header('Location: index.php?controller=Empleado&action=index');
+        }else
+        {
+            $cargo= new Cargo();
+            $cargos=$cargo->listar();
+            $genero=new Genero();
+            $generos=$genero->listar();
+            return $this->view->show('empleado/create',[
+                'cargos'=>$cargos,
+                'generos'=>$generos,
+            ]);
         }
-        $rol= new Rol();
-        $paquetes=$paquete->listar();
-        $depto= new Departamento();
-        $deptos=$depto->listar();
-        return $this->view->show('producto/create',[
-            'paquetes'=>$paquetes,
-            'deptos'=>$deptos,
-                ]);
+
     }
     public function editAction()
     {
         if(!empty($_POST))
         {
-            $producto= new Producto();
-            $producto->id=$_POST['id'];
-            $producto->codigo=$_POST['codigo'];
-            $producto->codigobarra=$_POST['barra'];
-            $producto->detalle=$_POST['detalle'];
-            $producto->precioFabricaU=$_POST['ufabrica'];;
-            $producto->precioFabricaPack=$_POST['packfabrica'];
-            $producto->imagen=$_POST['imagen'];
-            $producto->precioUnidadVenta=$_POST['uventa'];
-            $producto->precioPackinVenta=$_POST['packventa'];
-            $producto->paquete_id=$_POST['paquete'];;
-            $producto->depto_id=$_POST['depto'];
-            $producto->update();
-            header('Location: index.php?controller=Producto&action=index');
+            $empleado= new Empleado();
+            $empleado->empleado_id=$_POST['persona_id'];
+            $empleado->apellido=$_POST['apellido'];
+            $empleado->nombre=$_POST['nombre'];
+            $empleado->direccion=$_POST['direccion'];
+            $empleado->nacimiento=$_POST['nacimiento'];;
+            $empleado->genero_id=$_POST['genero'];
+
+            $empleado->persona_id=$_POST['empleado_id'];
+            $empleado->correo=$_POST['correo'];
+            $empleado->username=$_POST['username'];
+            $empleado->password=$_POST['password'];
+            $empleado->rol_id=$_POST['rol'];;
+            $empleado->update();
+            header('Location: index.php?controller=Empleado&action=index');
         }
         if(!empty($_GET['id']))
         {
-            $model=new Producto();
-            $producto=$model->findById($_GET['id']);
-            if(!is_null($producto))
+            $model=new Empleado();
+            $empleado=$model->findById($_GET['id']);
+            if(!is_null($empleado))
             {
-                $paquete= new Paquete();
-                $paquetes=$paquete->listar();
-                $depto= new Departamento();
-                $deptos=$depto->listar();
-                return $this->view->show('producto/edit',[
-                    'producto'=>$producto,
-                    'paquetes'=>$paquetes,
-                    'deptos'=>$deptos,
+                $cargo= new Cargo();
+                $cargos=$cargo->listar();
+                $genero=new Genero();
+                $generos=$genero->listar();
+                return $this->view->show('empleado/edit',[
+                    'empleado'=>$empleado,
+                    'cargos'=>$cargos,
+                    'generos'=>$generos,
                 ]);
             }
         }else
         {
-            header('Location: index.php?controller=Producto&action=index');
+            header('Location: index.php?controller=Empleado&action=index');
         }
 
     }
     public function deleteAction(){
-        if($_GET['id'])
+        if($_GET['persona'] and $_GET['empleado'])
         {
-            $model= new Producto();
-            $model->id=$_GET['id'];
+            $model= new Empleado();
+            $model->empleado_id=$_GET['persona'];
+            $model->persona_id=$_GET['persona'];
             if($model->eliminar())
             {
-                header('Location: index.php?controller=Producto&action=index');
+                header('Location: index.php?controller=Empleado&action=index');
             }
 
         }
