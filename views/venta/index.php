@@ -35,8 +35,8 @@
         <td><?= $venta->iva?></td>
         <td><?= $venta->caja?></td>
         <td><?= $venta->sucursal?></td>
-        <td><?= $venta->estado?></td>
-        <td><a href="<?= $config->get('url').'index.php?controller=Venta&action=view&venta='.$venta->id?>">Ver</a></td>
+        <td><?php if($venta->anulado==1) echo 'ACTIVO'; else echo 'DESACTIVO';?></td>
+        <td><a href="<?= $config->get('url').'index.php?controller=Venta&action=view&id='.$venta->id?>">Ver</a></td>
     </tr>
     <?php endforeach;?>
 

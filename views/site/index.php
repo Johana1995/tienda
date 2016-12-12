@@ -1,11 +1,12 @@
 <div>
 
-
     <?php if(User::singleton()->isLogin())
     {
         ?>
     <label>Usuario: <?= User::singleton()->nombre;?></label>
     <br>
+        <label>Cargo: <?= User::singleton()->rol();?> </label>
+        <br>
     <label>Sucursal: <?= User::singleton()->sucursal();?></label>
     <br>
     <label>Caja: <?= User::singleton()->caja();?></label>
@@ -30,4 +31,8 @@
 <a href="<?= $config->get('url').'index.php?controller=Cliente&action=index'?>">Clientes</a>
 <br>
 <a href="<?= $config->get('url').'index.php?controller=Sucursal&action=index'?>">Sucursal</a>
+<br>
+<a href="<?= $config->get('url').'index.php?controller=Venta&action=index'?>">Ventas</a>
+<br>
+<a href="<?= $config->get('url').'index.php?controller=Cargo&action=index'?>">Cargos</a>
 

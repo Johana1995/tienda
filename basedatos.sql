@@ -247,3 +247,59 @@ ALTER TABLE venta ADD CONSTRAINT FK_venta_sucursal
 FOREIGN KEY (sucursal) REFERENCES sucursal (id)
 ;
 
+CREATE TABLE accion
+(
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  nombre VARCHAR(30),
+  PRIMARY KEY (id)
+)
+;
+
+
+CREATE TABLE accion_cu
+(
+  cu INT UNSIGNED NOT NULL,
+  accion INT UNSIGNED NOT NULL,
+  PRIMARY KEY (cu,accion)
+)
+;
+
+
+CREATE TABLE caso_uso
+(
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  nombre VARCHAR(30) NOT NULL,
+  PRIMARY KEY (id)
+)
+;
+
+
+CREATE TABLE permiso
+(
+  cu INT UNSIGNED NOT NULL,
+  accion INT UNSIGNED NOT NULL,
+  cargo INT UNSIGNED NOT NULL ,
+  PRIMARY KEY (cu,accion,cargo),
+  key(cu,accion,cargo)
+)
+;
+ALTER TABLE accion_cu ADD CONSTRAINT FK_accion_accion_cu
+FOREIGN KEY (accion) REFERENCES accion (id)
+;
+ALTER TABLE accion_cu ADD CONSTRAINT FK_permiso_accion_c
+FOREIGN KEY (cu) REFERENCES caso_uso (id)
+;
+ALTER TABLE permiso ADD CONSTRAINT FK_permiso_accion_
+FOREIGN KEY (accion,cu) REFERENCES accion_cu (accion,cu)
+;
+ALTER TABLE permiso ADD CONSTRAINT FK_permiso_accio
+FOREIGN KEY (cargo) REFERENCES cargo (id)
+;
+
+CREATE TABLE tmp_venta(
+  sucursal INT UNSIGNED,
+  caja INT UNSIGNED,
+  producto INT UNSIGNED,
+  paquete INT UNSIGNED,
+  unidad INT UNSIGNED
+);

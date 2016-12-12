@@ -8,18 +8,19 @@ class ProductoSucursal extends Model
     public $detalle;
     public $precioPackinVenta;
     public $precioUnidadVenta;
-    public $paquete_id;
-    public $cantUnidades;
-    public $depto_id;
-    public $descripcion ;
+    public $paquete;//unidaddes en paquete
+    public $depto;//departamento
     public $cantidadExistente;
     public $cantidadPackExistente;
     public $cantidadUnidadMinima;
 
     const table='producto_sucursal';
     public function listar($sucursal){
-        $sql = 'SELECT * FROM producto_sucursal';
-        $sql .= ' where sucursal = ?';
+        $sql = 'SELECT p.id,p.codigo,p.detalle,p.precioPackinVenta,p.precioUnidadVenta,
+               q.cantUnidades as paquete,d.descripcion as depto,ps.cantidadExistente,
+               ps.cantidadPackExistente,ps.cantidadUnidadMinima
+                from producto p, producto_sucursal ps,departamento d,paquete q
+                where p.id=ps.producto and ps.sucursal=? and p.paquete_id=q.id and d.id=p.depto_id';
         $params = [$sucursal];
         $query = $this->db->prepare($sql);
         $query->execute($params);

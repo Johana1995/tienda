@@ -16,12 +16,20 @@ if($user->esEmpleado() )
                 case 'EmpleadoController':
                     $acciones = ['indexAction', 'createAction', 'editAction','deleteAction',];
                     break;
+                case 'CargoController':
+                    $acciones = ['indexAction', 'createAction', 'editAction','deleteAction',];
+                    break;
                 case 'ClienteController':
                     $acciones = ['indexAction', 'createAction', 'editAction','deleteAction',];
                     break;
                 case 'SucursalController':
                     $acciones = ['indexAction', 'createAction', 'viewAction','deleteAction',
                     'productsAction','addProductsAction','deleteProductsAction',
+                    ];
+                    break;
+                case 'VentaController':
+                    $acciones = ['indexAction', 'createAction', 'viewAction','deleteAction',
+                        'productsAction','addProductsAction','deleteProductsAction',
                     ];
                     break;
                 case 'SiteController':
@@ -58,4 +66,12 @@ if($user->esEmpleado() )
         $controllerName='SiteController';
     }
 
+}
+else{
+
+    if($controllerName!='SiteController' and $actionName!='loginAction')
+    {
+        $actionName='loginAction';
+        $controllerName='SiteController';
+    }
 }
