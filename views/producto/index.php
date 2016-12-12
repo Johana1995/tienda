@@ -8,8 +8,24 @@
     <title>Producto</title>
 </head>
 <body>
+<td><a href="<?= $config->get('url').'index.php?controller=Producto&action=create'?>">Nuevo</a></td>
 
 <table >
+    <tr>
+        <th>ID</th>
+        <th>CODIGO</th>
+        <th>BARRA</th>
+        <th>DETALLE</th>
+        <th>U.FABRICA $</th>
+        <th>PACK. FABRICA $</th>
+        <th>IMAGEN</th>
+        <th>U.VENTA $</th>
+        <th>PACK.VENTA $</th>
+        <th>U. EN PACK</th>
+        <th>DEPTO</th>
+
+    </tr>
+
     <?php foreach ($productos as $producto):?>
     <tr>
         <td><?= $producto->id?></td>

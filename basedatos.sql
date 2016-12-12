@@ -150,8 +150,100 @@ ALTER TABLE persona ADD CONSTRAINT FK_persona_genero
 ALTER TABLE empleado ADD CONSTRAINT FK_empleado_rol
 FOREIGN KEY (rol_id) REFERENCES cargo (id)
 ;
+CREATE TABLE caja
+(
+       id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+       numero VARCHAR(10),
+       montoinicial DECIMAL(10,2),
+       sucursal INT UNSIGNED,
+       empleado INT UNSIGNED,
+       PRIMARY KEY (id),
+       KEY (empleado),
+       KEY (sucursal)
+)
+;
+CREATE TABLE detalle_venta
+(
+       venta INT UNSIGNED NOT NULL,
+       producto INT UNSIGNED NOT NULL,
+       cantidadUnidad INT,
+       cantidadPack INT,
+       PRIMARY KEY (venta, producto)
+)
+;
+CREATE TABLE producto_sucursal
+(
+       producto INT UNSIGNED NOT NULL,
+       sucursal INT UNSIGNED NOT NULL,
+       cantidadExistente INT,
+       cantidadPackExistente INT,
+       cantidadUnidadMinima INT,
+       PRIMARY KEY (producto,sucursal)
+)
+;
+CREATE TABLE sucursal
+(
+       id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+       numero VARCHAR(10),
+       direccion VARCHAR(50),
+       nombre VARCHAR(50),
+       PRIMARY KEY (id)
+)
+;
+CREATE TABLE venta
+(
+       id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+       numero VARCHAR(10),
+       fechahora DATETIME(0),
+       subtotal DECIMAL(10,2),
+       descuento DECIMAL(10,2),
+       iva DECIMAL(10,2),
+       cliente INT UNSIGNED,
+       empleado INT UNSIGNED,
+       caja INT UNSIGNED,
+       sucursal INT UNSIGNED,
+       anulado int ,
+       PRIMARY KEY (id,caja, sucursal),
+       KEY (caja),
+       KEY (cliente),
+       KEY (empleado),
+       KEY (sucursal)
+)
+;
 
-SELECT p.id as persona_id,p.apellido,p.nombre,p.direccion,p.nacimiento,p.genero_id,
-                  e.id as empleado_id,e.correo,e.username , e.password,e.rol_id,g.descripcion as genero,c.nombre as cargo
-                from persona p, empleado e,genero g,cargo c
-                WHERE p.id=e.persona_id and g.id=p.genero_id and c.id=e.rol_id
+ALTER TABLE caja ADD CONSTRAINT FK_caja_empleado
+FOREIGN KEY (empleado) REFERENCES empleado (id)
+;
+
+ALTER TABLE caja ADD CONSTRAINT FK_caja_sucursal
+FOREIGN KEY (sucursal) REFERENCES sucursal (id)
+;
+
+ALTER TABLE detalle_venta ADD CONSTRAINT FK_detalle_venta_venta
+FOREIGN KEY (venta) REFERENCES venta (id)
+;
+
+ALTER TABLE producto_sucursal ADD CONSTRAINT FK_producto_sucursal_producto
+FOREIGN KEY (producto) REFERENCES producto (id)
+;
+
+ALTER TABLE producto_sucursal ADD CONSTRAINT FK_producto_sucursal_sucursal
+FOREIGN KEY (sucursal) REFERENCES sucursal (id)
+;
+
+ALTER TABLE venta ADD CONSTRAINT FK_venta_caja
+FOREIGN KEY (caja) REFERENCES caja (id)
+;
+
+ALTER TABLE venta ADD CONSTRAINT FK_venta_cliente
+FOREIGN KEY (cliente) REFERENCES cliente (id)
+;
+
+ALTER TABLE venta ADD CONSTRAINT FK_venta_empleado
+FOREIGN KEY (empleado) REFERENCES empleado (id)
+;
+
+ALTER TABLE venta ADD CONSTRAINT FK_venta_sucursal
+FOREIGN KEY (sucursal) REFERENCES sucursal (id)
+;
+

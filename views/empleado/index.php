@@ -8,6 +8,7 @@
     <title>EMPLEADO</title>
 </head>
 <body>
+<h2>Empleado: <?php User::singleton()->nombre ?></h2>
 <a href="<?= $config->get('url').'index.php?controller=Empleado&action=create'?>">Nuevo</a>
 <br>
 <table >

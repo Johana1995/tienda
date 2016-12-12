@@ -103,7 +103,6 @@ class ProductoController extends Controller
             ]);
         }
     }
-
     public function deleteImageAction(){
         if(!empty($_GET['producto']) and !empty($_GET['imagen'])){
             $producto=new Producto();
