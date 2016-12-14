@@ -27,9 +27,10 @@ class VentaController extends Controller
 
                 $modelCarrito=new ProductoVenta();
 
-                $carrito=
-                return $this->view->show('venta/create', [
+                $carrito=$modelCarrito->tempProductos();
 
+                return $this->view->show('venta/create', [
+                    'carrito'=>$carrito,
                     'productos' => $productos,
                     'clientes' => $clientes,
                 ]);
@@ -60,16 +61,22 @@ class VentaController extends Controller
         }
     }
     public function addProductsAction(){
-         if(!empty($_GET['producto']))
-            {
-                $sucursal=User::singleton()->sucursal;
-                $caja=User::singleton()->caja;
+         if(!empty($_GET['producto'])) {
+             $productoventa = new ProductoVenta();
+             $productoventa->addproducto($_GET['producto']);
 
-                $productoventa= new ProductoVenta();
-                $productoventa->addproducto($_GET['producto']);
-                header('Location: index.php?controller=Venta&action=view&id='.$_GET['sucursal']);
+         }
+        header('Location: index.php?controller=Venta&action=create');
+
+    }
+    public function removeProductsAction()
+    {
+          if(!empty($_GET['producto'])) {
+
+                $productoventa = new ProductoVenta();
+                $productoventa->removeProducts($_GET['producto']);
+
             }
-
-
+            header('Location: index.php?controller=Venta&action=create');
     }
 }

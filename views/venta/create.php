@@ -36,6 +36,7 @@
 </div>
 
 <h2>Carrito:</h2>
+<form method="post">
 <table style="border-style: solid">
     <tr>
         <th>ID PROD.</th>
@@ -46,15 +47,8 @@
         <TH>DEPTO.</TH>
         <TH>U.VENTA</TH>
         <TH>PACK. VENTA</TH>
-    </tr>public $producto;
-    public $codigo;
-    public $precioU;
-    public $precioP;
-    public $cantP;
-    public $depto;
-    public $cantidadU;
-    public $cantidadP;
-    <?php foreach ($otrosProductos as $producto):?>
+    </tr>
+    <?php foreach ($carrito as $producto):?>
         <tr>
 
             <td><?= $producto->producto?></td>
@@ -65,12 +59,12 @@
             <td><?= $producto->depto?></td>
             <td><?= $producto->cantidadU?></td>
             <td><?= $producto->cantidadP?></td>
-            <td><a href="<?= $config->get('url').'index.php?controller=Venta&action=addProducts&producto='.$producto->id?>">Remove</a></td>
-
+            <td><a href="<?= $config->get('url').'index.php?controller=Venta&action=removeProducts&producto='.$producto->producto?>">Remover</a></td>
         </tr>
     <?php endforeach;?>
 </table>
-
+    <input value="GUARDAR" type="submit">
+</form>
 <div>
     <h2>Productos Disponibles:</h2>
     <table style="border-style: solid">
