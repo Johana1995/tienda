@@ -67,4 +67,30 @@ class ProductoSucursal extends Model
             return false;
         }
     }
+    public function aumentarStock($sucursal,$producto,$unidades,$paquete,$minima)
+    {
+        try {
+            $sql = 'UPDATE  producto_sucursal set cantidadExistente=cantidadExistente+ ?, ';
+            $sql .= ' cantidadPackExistente=cantidadPackExistente+ ?, cantidadUnidadMinima=?  WHERE producto=? and sucursal=?';
+            $params = [$unidades,$paquete,$minima,$producto,$sucursal];
+            $query = $this->db->prepare($sql);
+            $query->execute($params);
+            return ($query->rowCount() != 0);
+        }catch ( PDOException $e)
+        {
+            return false;
+        }
+    }
+    public function stockProducto($sucursal,$producto)
+    {
+        $sql = 'SELECT ps.sucursal, ps.producto,ps.cantidadExistente, ps.cantidadPackExistente,ps.cantidadUnidadMinima,s.nombre,p.codigo,p.detalle
+from
+  producto_sucursal ps, sucursal s, producto p
+WHERE ps.producto=p.id and ps.sucursal=s.id and  ps.producto=? and ps.sucursal=?';
+        $params = [$producto,$sucursal];
+        $query = $this->db->prepare($sql);
+        $query->execute($params);
+        return $query->fetch(PDO::FETCH_OBJ);
+
+    }
 }

@@ -24,7 +24,7 @@ if($user->esEmpleado() )
                     break;
                 case 'SucursalController':
                     $acciones = ['indexAction', 'createAction', 'viewAction','deleteAction',
-                    'productsAction','addProductsAction','deleteProductsAction',
+                    'productsAction','addProductsAction','deleteProductsAction','stockAction',
                     ];
                     break;
                 case 'VentaController':

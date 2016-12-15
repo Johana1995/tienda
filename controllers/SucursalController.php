@@ -73,7 +73,35 @@ class SucursalController extends Controller
     }
     public function stockAction()
     {
-        
+        if(!empty($_POST))
+        {
+
+            $model= new ProductoSucursal();
+            $sucursal=$_POST['sucursal'];
+            $producto=$_POST['producto'];
+            $unidad=$_POST['unidad'];
+            $paquete= $_POST['paquete'];
+            $minima=$_POST['minima'];
+            $model->aumentarStock($sucursal,$producto,$unidad,$paquete,$minima);
+
+            header('Location: index.php?controller=Sucursal&action=view&id='.$sucursal);
+
+        }else{
+            if(!empty($_GET['producto']) and !empty($_GET['sucursal']))
+            {
+                $productosucursal= new ProductoSucursal();
+                    $stock=$productosucursal->stockProducto($_GET['sucursal'],$_GET['producto']);
+
+                return $this->view->show('sucursal/addstock',
+                    [
+                        'dato'=>$stock,
+                    ]);
+            }
+
+        }
+
+
+
     }
 
 }
