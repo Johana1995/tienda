@@ -33,7 +33,7 @@ if($user->esEmpleado() )
                     ];
                     break;
                 case 'ReporteController':
-                    $acciones = ['indexAction',
+                    $acciones = ['indexAction','empleadosAction',
                     ];
                     break;
                 case 'SiteController':

@@ -23,7 +23,7 @@ class SPDO extends PDO
                 $config->get('dbpass')
             );
             $this->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            echo '<h1>CONEXION BUENA</h1>';
+           // echo '<h1>CONEXION BUENA</h1>';
         }
         catch (Exception $e)
         {
