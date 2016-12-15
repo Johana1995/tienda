@@ -10,6 +10,7 @@ class Sucursal extends Model
     public $nombre;
     const table='sucursal';
 
+
     public function listar(){
         $sql = 'SELECT * FROM '.self::table;
         $query = $this->db->prepare($sql);

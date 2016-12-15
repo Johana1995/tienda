@@ -24,7 +24,7 @@
             <li><a href="<?= $config->get('url').'index.php?controller=Venta&action=index'?>">ventas</a></li>
             <li><a href="#">stock</a></li>
             <li><a href="<?= $config->get('url').'index.php?controller=Producto&action=index'?>">productos</a></li>
-            <li><a href="#">traspasos</a></li>
+            <li><a href="<?= $config->get('url').'index.php?controller=Traspaso&action=index'?>">traspasos</a></li>
             <li><a href="#">bajas Productos</a></li>
           </ul>
 

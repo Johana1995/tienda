@@ -12,4 +12,14 @@ class ReporteController extends Controller
         $reporte = new Reporte();
         return $reporte->reporteEmpleados();
     }
+    public function ventasAction()
+    {
+        $reporte = new Reporte();
+        return $reporte->reporteVentas();
+    }
+    public function productosAction()
+    {
+        $reporte = new Reporte();
+        return $reporte->reporteProductos();
+    }
 }

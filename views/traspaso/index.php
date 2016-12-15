@@ -18,7 +18,7 @@ include "navbar.php";
     <div class="panel panel-info">
         <div class="panel-heading">
             <div class="btn-group pull-right">
-                <a  href="<?= $config->get('url').'index.php?controller=Venta&action=create'?>" class="btn btn-info">
+                <a  href="<?= $config->get('url').'index.php?controller=Traspaso&action=create'?>" class="btn btn-info">
                     <span class="glyphicon glyphicon-plus" ></span> Nuevo </a>
             </div>
 
@@ -38,27 +38,21 @@ include "navbar.php";
         <th>NUMERO</th>
         <th>DATE</th>
         <th>EMPLEADO</th>
-        <th>CAJA</th>
-        <th>SUCURSAL</th>
-        <th>ESTADO</th>
+        <th>EMISOR</th>
+        <th>RECEPTOR</th>
 
     </tr>
 
-    <?php foreach ($ventas as $venta):?>
+    <?php foreach ($traspasos as $venta):?>
     <tr>
         <td><?= $venta->id?></td>
         <td><?= $venta->numero?></td>
         <td><?= $venta->fechahora?></td>
-        <td><?= $venta->subtotal?></td>
-        <td><?= $venta->descuento?></td>
-        <td><?= $venta->iva?></td>
-        <td><?= $venta->total?></td>
-        <td><?= $venta->cliente()->nombre?></td>
         <td><?= $venta->empleado()->apellido?></td>
-        <td><?= $venta->caja()->numero?></td>
-        <td><?= $venta->sucursal()->nombre?></td>
-        <td><?php if($venta->anulado==0) echo 'ACTIVO'; else echo 'DESACTIVO';?></td>
-        <td><a href="<?= $config->get('url').'index.php?controller=Venta&action=view&id='.$venta->id?>">Ver</a></td>
+        <td><?= $venta->sucursalEmisor()->nombre?></td>
+        <td><?= $venta->sucursalReceptor()->nombre?></td>
+
+        <td><a href="<?= $config->get('url').'index.php?controller=Traspaso&action=view&id='.$venta->id?>">Ver</a></td>
     </tr>
     <?php endforeach;?>
             </table>

@@ -1,6 +1,6 @@
 <?php
 require 'models/Traspaso.php';
-
+require 'models/Sucursal.php';
 class TraspasoController extends Controller
 {
 
@@ -31,29 +31,42 @@ class TraspasoController extends Controller
     public function createAction(){
         if(!empty($_POST))
         {
-            $venta= new Compra();
-            $venta->fechahora=$_POST['fecha'];
-            $venta->empleado=$_POST['vendedor'];
-            $venta->proveedor=$_POST['proveedor'];
-            $venta->sucursal=User::singleton()->sucursal;
-            $id_venta=$venta->save();
+            $emisor=$_POST['emisor'];
+            $receptor=$_POST['receptor'];
+            if($emisor==$receptor)
+            {
+                $modelCliente= new Sucursal();
+                $proveedores= $modelCliente->listar();
+                return $this->view->show('traspaso/seleccion', [
+                    'sucursales'=>$proveedores,
+                    'mensaje'=>'LAS SUCURSALES DEBEN SER DISTINTAS',
+                ]);
 
-            $producto_venta=new ProductoCompra();
-            $producto_venta->guardarProductos($id_venta);
-            header('Location: index.php?controller=Compra&action=index');
+            }else {
+
+                $modelCliente= new Sucursal();
+                $modelCliente->id=$receptor;
+                $Sreceptor=$modelCliente->buscar();
+                $modelCliente->id=$emisor;
+                $Semisor=$modelCliente->buscar();
+
+                $productos = new ProductoSucursal();
+                $prodEmisor = $productos->listar($emisor);
+                $prodReceptor = $productos->listar($receptor);
+                return $this->view->show('traspaso/nuevo', [
+                    'sucursalE'=>$Semisor,
+                    'sucursalR'=>$Sreceptor,
+                    'prodE'=>$prodEmisor,
+                    'prodR'=>$prodReceptor,
+                ]);
+            }
 
         }else {//
-            $modelCliente= new Proveedor();
+            $modelCliente= new Sucursal();
             $proveedores= $modelCliente->listar();
 
-            $model = new ProductoSucursal();
-            $productos = $model->listar(User::singleton()->sucursal);
-            $modelEmpleado=new Empleado();
-            $empleados= $modelEmpleado->listar();
-            return $this->view->show('compra/create', [
-                'proveedores'=>$proveedores,
-                'productos' => $productos,
-                'empleados'=>$empleados
+            return $this->view->show('traspaso/seleccion', [
+                'sucursales'=>$proveedores,
             ]);
         }
     }

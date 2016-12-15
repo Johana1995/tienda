@@ -33,3 +33,4 @@ $config->set('logo-reporte','img/logo-reporte.png');
 $config->set('ubicacion','Dirección: Avenida Grita, Comercial los Angeles, Nro 51 Primer piso');
 $config->set('telefono','Telefono fijo: 3458245 - Telefono celular: +591 75332815');
 $config->set('correo','Correo electronico: tiendaivone@gmail.com');
+$config->set('imagenes','imagenes/producto/');

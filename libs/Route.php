@@ -33,7 +33,7 @@ if($user->esEmpleado() )
                     ];
                     break;
                 case 'ReporteController':
-                    $acciones = ['indexAction','empleadosAction',
+                    $acciones = ['indexAction','empleadosAction','ventasAction','productosAction',
                     ];
                     break;
                 case 'SiteController':
@@ -43,6 +43,9 @@ if($user->esEmpleado() )
                     $acciones = ['indexAction', 'createAction', 'viewAction','deleteAction','clearTempAction',
                         'productsAction','addProductsAction','deleteProductsAction','saveAction',
                     ];
+                    break;
+                case 'TraspasoController':
+                    $acciones = ['indexAction', 'createAction', 'viewAction','clearTempAction', ];
                     break;
             }
              if(!in_array($actionName,$acciones))
