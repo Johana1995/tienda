@@ -13,37 +13,37 @@ class VentaController extends Controller
         );
     }
     public function createAction(){
-
-        if(User::singleton()->rol()=='ADMINISTRADOR') {
             if(!empty($_POST))
-            {//se crear la venta
+            {
+
+                $venta= new Venta();
+                $venta->fechahora=$_POST['fecha'];
+                $venta->empleado=$_POST['vendedor'];
+                $venta->cliente=$_POST['id_cliente'];
+                $venta->anulado=$_POST['estado'];
+                $venta->sucursal=User::singleton()->sucursal;
+                $venta->caja=User::singleton()->caja;
+                $id_venta=$venta->save();
+
+                $producto_venta=new ProductoVenta();
+                $producto_venta->guardarProductos($id_venta);
+                header('Location: index.php?controller=Venta&action=index');
 
             }else {//
+                $modelCliente= new Cliente();
+                $clientes= $modelCliente->listar();
+
                 $model = new ProductoSucursal();
-                $productos = $model->listar(User::singleton()->sucursal);
+                $productos = $model->listar(1);
 
-                $modelC = new Cliente();
-                $clientes = $modelC->listar();
-
-                $modelCarrito=new ProductoVenta();
-
-                $carrito=$modelCarrito->tempProductos();
-
+                $modelEmpleado=new Empleado();
+                $empleados= $modelEmpleado->listar();
                 return $this->view->show('venta/create', [
-                    'carrito'=>$carrito,
+                    'clientes'=>$clientes,
                     'productos' => $productos,
-                    'clientes' => $clientes,
+                    'empleados'=>$empleados
                 ]);
             }
-        }
-        else
-        {
-
-            $mensaje='Para realizar ventas usted debe ser Un Empleado Vendedor e ingresar a una Sucursal y Caja';
-            return $this->view->show('venta/error', [
-                'mensaje' => $mensaje,
-            ]);
-        }
     }
     public function viewAction(){
 
@@ -78,5 +78,14 @@ class VentaController extends Controller
 
             }
             header('Location: index.php?controller=Venta&action=create');
+    }
+    public function saveAction()
+    {
+        $mensa='';
+        if( !empty( $_GET['cliente']))
+        {
+            $mensa=$_GET['cliente'];
+        }
+        $this->view->show('venta/prueba',['m'=>$_GET['cliente']]);
     }
 }

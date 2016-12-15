@@ -6,12 +6,34 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>EMPLEADO</title>
+    <?php include("head.php");?>
+
 </head>
 <body>
-<h2>Empleado: <?php User::singleton()->nombre ?></h2>
-<a href="<?= $config->get('url').'index.php?controller=Empleado&action=create'?>">Nuevo</a>
-<br>
-<table >
+
+<?php
+include("navbar.php");
+?>
+<div class="container">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <div class="btn-group pull-right">
+                <a  href="<?= $config->get('url').'index.php?controller=Empleado&action=create'?>" class="btn btn-info">
+                    <span class="glyphicon glyphicon-plus" ></span> Nuevo </a>
+            </div>
+
+            <form class="form-horizontal" role="form" id="datos_cotizacion">
+
+                <div class="form-group row">
+                    <div class="col-md-5">
+                    </div>
+
+                </div>
+            </form>
+        </div>
+        <div class="panel-body">
+
+<table class="table table-hover" >
     <tr>
         <td>ID</td>
         <td>CORREO</td>
@@ -44,5 +66,11 @@
     <?php endforeach;?>
 </table>
 
+        </div>
+        <?php
+        include("footer.php");
+        ?>
+    </div>
+</div>
 </body>
 </html>

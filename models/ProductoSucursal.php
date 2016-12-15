@@ -32,10 +32,7 @@ class ProductoSucursal extends Model
     {
         $sql = 'SELECT *
                 from producto p
-                where p.id NOT in (
-                SELECT ps.producto
-                from producto_sucursal ps, sucursal s
-                WHERE ps.sucursal=s.id and s.id=?)';
+                where  p.id not in (SELECT ps.producto from producto_sucursal ps where ps.sucursal=?)';
         $params = [$sucursal];
         $query = $this->db->prepare($sql);
         $query->execute($params);

@@ -25,8 +25,7 @@ class FrontController
 
 
         // 2.- incluir el fichero o archivo de configuracion
-        require __DIR__.'/../Config.php';
-
+        require __DIR__.'/../config.php';
 
         // 3.- recuperar el controlador requerido por el cliente,
         //      de lo contrario definir uno por defecto

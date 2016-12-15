@@ -27,8 +27,10 @@ class Venta extends Model
     }
     public function empleado()
     {
-        $sql = 'SELECT * FROM empleado ';
-        $sql .= ' where id = ?';
+        $sql = 'SELECT p.id as persona_id,p.apellido,p.nombre,p.direccion,p.nacimiento,p.genero_id,
+          e.id as empleado_id,e.correo,e.username , e.password,e.rol_id,g.descripcion as genero,c.nombre as cargo
+          from persona p, empleado e,genero g,cargo c
+          WHERE p.id=e.persona_id and g.id=p.genero_id and c.id=e.rol_id and e.id=?';
         $params = [$this->empleado];
         $query = $this->db->prepare($sql);
         $query->execute($params);
@@ -37,13 +39,14 @@ class Venta extends Model
     }
     public function cliente()
     {
-        $sql = 'SELECT * FROM cliente ';
-        $sql .= ' where id = ?';
+        $sql = 'SELECT p.id as persona_id,p.apellido,p.nombre,p.direccion,p.nacimiento,p.genero_id,
+            c.id as cliente_id,c.nit,c.fecha_creacion , c.tipo_id,g.descripcion as genero,t.descripcion as tipo
+            from persona p, cliente c,genero g,tipo_cliente t
+            WHERE p.id=c.persona_id and g.id=p.genero_id and t.id=c.tipo_id and c.id=?;';
         $params = [$this->cliente];
         $query = $this->db->prepare($sql);
         $query->execute($params);
-        $query->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, 'Cliente');
-        return $query->fetch();
+        return $query->fetch(PDO::FETCH_OBJ);
     }
     public function sucursal()
     {
@@ -66,12 +69,11 @@ class Venta extends Model
         return $query->fetch();
     }
     public function productos(){
-        $sql = 'SELECT p.id as producto,p.codigo,p.precioUnidadVenta as precioU,
-       p.precioPackinVenta as precioP,q.cantUnidades as cantP,d.descripcion as depto,
-       dv.cantidadUnidad As cantidadU,dv.cantidadPack as cantidadP
-        FROM producto p,detalle_venta dv,departamento d,paquete q
-        WHERE p.id=dv.producto and p.depto_id=d.id AND p.paquete_id=q.id 
-              and dv.venta=?;';
+        $sql = 'SELECT p.id, p.detalle as producto,p.codigo,p.precioUnidadVenta as precioU,p.precioPackinVenta as precioP
+,q.cantUnidades as cantP,d.descripcion as depto, dv.cantidadPack as cantidadP,dv.cantidadUnidad as cantidadU,
+dv.subtotal 
+FROM detalle_venta dv, producto p,departamento d,paquete q
+WHERE dv.producto=p.id and p.depto_id=d.id and p.paquete_id=q.id and dv.venta=?;';
         $params = [$this->id];
         $query = $this->db->prepare($sql);
         $query->execute($params);
@@ -80,8 +82,22 @@ class Venta extends Model
     public function anular(){
 
     }
-    public function crear(){
+    public function save(){
 
+        try {
+            $sql = 'INSERT INTO venta (numero,fechahora,subtotal,descuento,iva,cliente,empleado,caja,sucursal,anulado)';
+            $sql .= ' VALUES (?,?,?,?,?,?,?,?,?,?)';
+            $params = [$this->numero,$this->fechahora,$this->subtotal,$this->descuento,$this->iva,$this->cliente,$this->empleado,$this->caja,$this->sucursal,$this->anulado];
+            $query = $this->db->prepare($sql);
+            if(!$query->execute($params)) {
+                return false;
+            }
+            return $this->db->lastInsertId();
+
+        }catch ( PDOException $e)
+        {
+            return false;
+        }
     }
     public function buscar()
     {

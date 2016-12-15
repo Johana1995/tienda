@@ -71,4 +71,65 @@ class ProductoVenta extends Model
         $query->execute($params);
         return $query->fetchAll(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, 'ProductoVenta');
     }
+    public function guardarProductos($venta_id)
+    {
+        $sucursal=User::singleton()->sucursal;
+        $caja=User::singleton()->caja;
+        $sql = "SELECT t.producto,t.unidad,t.paquete,p.precioPackinVenta as precioP,p.precioUnidadVenta as precioU
+                FROM tmp_venta t, producto p
+                WHERE t.producto=p.id and t.sucursal='".$sucursal."' and t.caja='".$caja."'";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        $tmps=$query->fetchAll(PDO::FETCH_OBJ);
+
+        $sentencia = $this->db->prepare("INSERT INTO detalle_venta (venta, producto,cantidadUnidad,cantidadPack,subtotal) VALUES (?, ?,?,?,?)");
+        $sentencia->bindParam(1, $venta);
+        $sentencia->bindParam(2, $producto);
+        $sentencia->bindParam(3, $unid);
+        $sentencia->bindParam(4, $pack);
+        $sentencia->bindParam(5, $subt);
+        $total_venta=0;
+        foreach ($tmps as $tmp):
+            $venta=$venta_id;
+            $producto = $tmp->producto;
+            $unid = $tmp->unidad;
+            $pack=$tmp->paquete;
+            $precioP=$tmp->precioP;
+            $precioU=$tmp->precioU;
+            $subt=($precioP*$pack)+($precioU* $unid);
+            $total_venta=$total_venta+$subt;
+            $sentencia->execute();
+            endforeach;
+
+
+        $impuesto=2;
+        $subtotal=number_format($total_venta,2,'.','');
+        $total_iva=($subtotal * $impuesto )/100;
+        $total_iva=number_format($total_iva,2,'.','');
+        $total_venta_todo=$subtotal+$total_iva;
+
+        $sql=null;
+        $query=null;
+        $sql = 'update venta';
+        $sql .= ' set numero=?, subtotal=? ,descuento=?, iva=?,total=?  where id=? and sucursal=? and caja=? ';
+        $params = ['Nª '.$venta_id,$subtotal,0,$impuesto,$total_venta_todo,$venta_id,$sucursal,$caja];
+        $query = $this->db->prepare($sql);
+        $query->execute($params);
+        $sql=null;
+        $query=null;
+        try {
+
+
+            $sql = 'DELETE FROM tmp_venta';
+            $sql .= ' WHERE sucursal=? and caja=?';
+            $params = [$sucursal,$caja];
+            $query = $this->db->prepare($sql);
+            $query->execute($params);
+            return ($query->rowCount() != 0);
+        }catch ( PDOException $e)
+        {
+            return false;
+        }
+
+    }
 }

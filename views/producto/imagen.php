@@ -23,5 +23,6 @@
     <?php endforeach;  ?>
 
 </table>
+<?= $image->url?>
 </body>
 </html>

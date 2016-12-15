@@ -8,7 +8,10 @@
     <title>Mensaje----</title>
 </head>
 <body>
-<h2><?= $mensaje?></h2>
+
+<pre>
+    <?= $mensaje?>
+</pre>
 
 </body>
 </html>

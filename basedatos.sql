@@ -46,7 +46,6 @@ INSERT  INTO  departamento VALUEs (2,'AUDIFONO');
 INSERT INTO paquete VALUES (1,'8');
 INSERT INTO paquete VALUES (2,'12');
 INSERT INTO paquete VALUES (3,'25');
-//INSERT INTO  producto VALUES (1,'FLH234','','8GB',10,10,'',2,20,1,1);
 CREATE TABLE cliente
 (
 	persona_id INT UNSIGNED NOT NULL,
@@ -168,6 +167,7 @@ CREATE TABLE detalle_venta
        producto INT UNSIGNED NOT NULL,
        cantidadUnidad INT,
        cantidadPack INT,
+       subtotal INT UNSIGNED,
        PRIMARY KEY (venta, producto)
 )
 ;
@@ -272,7 +272,14 @@ CREATE TABLE caso_uso
   PRIMARY KEY (id)
 )
 ;
-
+CREATE TABLE cargo
+(
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  nombre VARCHAR(30) NOT NULL,
+  descripcion VARCHAR (100),
+  PRIMARY KEY (id)
+)
+;
 
 CREATE TABLE permiso
 (

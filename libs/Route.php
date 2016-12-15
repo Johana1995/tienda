@@ -29,7 +29,11 @@ if($user->esEmpleado() )
                     break;
                 case 'VentaController':
                     $acciones = ['indexAction', 'createAction', 'viewAction','deleteAction',
-                        'productsAction','addProductsAction','deleteProductsAction',
+                        'productsAction','addProductsAction','deleteProductsAction','saveAction',
+                    ];
+                    break;
+                case 'ReporteController':
+                    $acciones = ['indexAction',
                     ];
                     break;
                 case 'SiteController':
