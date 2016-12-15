@@ -61,10 +61,10 @@ require_once "../libs/DataBase.php";
 						<td><?php echo $precioP; ?></td>
 						<td class='col-xs-1'>
 						<div class="pull-right">
-						<input type="number" class="form-control" style="text-align:right" id="U_<?php echo $id_producto; ?>"  value="4" >
+						<input type="number" class="form-control" style="text-align:right" id="U_<?php echo $id_producto; ?>"  value="1" >
 						</div></td>
 						<td class='col-xs-2'><div class="pull-right">
-						<input type="number" class="form-control" style="text-align:right" id="P_<?php echo $id_producto; ?>"  value="2" >
+						<input type="number" class="form-control" style="text-align:right" id="P_<?php echo $id_producto; ?>"  value="0" >
 						</div></td>
 						<td class='text-center'><a class='btn btn-info'href="#" onclick="agregar('<?php echo $id_producto ?>')">
 								<i class="glyphicon glyphicon-plus"></i></a></td>

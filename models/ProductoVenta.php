@@ -88,17 +88,27 @@ class ProductoVenta extends Model
         $sentencia->bindParam(3, $unid);
         $sentencia->bindParam(4, $pack);
         $sentencia->bindParam(5, $subt);
+
+        $update = $this->db->prepare("UPDATE producto_sucursal set cantidadExistente=cantidadExistente-? ,
+          cantidadPackExistente=cantidadPackExistente-? WHERE  producto=? and sucursal='".$sucursal."';");
+        $update->bindParam(1, $_un);
+        $update->bindParam(2, $_pac);
+        $update->bindParam(3, $_prod);
         $total_venta=0;
         foreach ($tmps as $tmp):
             $venta=$venta_id;
             $producto = $tmp->producto;
+            $_prod=$producto;
             $unid = $tmp->unidad;
+            $_un=$unid;
             $pack=$tmp->paquete;
+            $_pac=$pack;
             $precioP=$tmp->precioP;
             $precioU=$tmp->precioU;
             $subt=($precioP*$pack)+($precioU* $unid);
             $total_venta=$total_venta+$subt;
             $sentencia->execute();
+            $update->execute();
             endforeach;
 
 
