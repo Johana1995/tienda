@@ -16,12 +16,35 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
 
-        <li ><a href="facturas.php"><i class='glyphicon glyphicon-list-alt'></i> Facturas <span class="sr-only">(current)</span></a></li>
-        <li ><a href="productos.php"><i class='glyphicon glyphicon-barcode'></i> Productos</a></li>
-		<li ><a href="clientes.php"><i class='glyphicon glyphicon-user'></i> Clientes</a></li>
-		<li><a href="usuarios.php"><i  class='glyphicon glyphicon-lock'></i> Usuarios</a></li>
-		<li><a href="perfil.php"><i  class='glyphicon glyphicon-cog'></i> Configuración</a></li>
-        <li><a href="#"><i  class='glyphicon glyphicon-cog'></i><?= User::singleton()->sucursal().' Caja:'.User::singleton()->caja();?> </a></li>
+        <ul class="nav navbar-nav navbar-left dropdown">
+          <a class="dropdown-toggle btn btn-primary" type="button" data-toggle="dropdown">MOVIMIENTO
+            <i class='glyphicon glyphicon-barcode'></i> </a>
+          <ul class="dropdown-menu">
+            <li><a href="<?= $config->get('url').'index.php?controller=Cliente&action=index'?>">clientes</a></li>
+            <li><a href="<?= $config->get('url').'index.php?controller=Venta&action=index'?>">ventas</a></li>
+            <li><a href="#">stock</a></li>
+            <li><a href="<?= $config->get('url').'index.php?controller=Producto&action=index'?>">productos</a></li>
+            <li><a href="#">traspasos</a></li>
+            <li><a href="#">bajas Productos</a></li>
+          </ul>
+
+        </ul>
+        <ul class="nav navbar-nav navbar-left dropdown">
+          <a class="dropdown-toggle btn btn-primary" type="button" data-toggle="dropdown">SITIO
+            <i class='glyphicon glyphicon-barcode'></i> </a>
+          <ul class="dropdown-menu">
+            <li><a href="<?= $config->get('url').'index.php?controller=Sucursal&action=index'?>">Sucursales</a></li>
+            <li><a href="#">proveedores</a></li>
+            <li><a href="<?= $config->get('url').'index.php?controller=Empleado&action=index'?>">Empleados</a></li>
+
+            <li><a href="<?= $config->get('url').'index.php?controller=Cargo&action=index'?>">Cargos</a></li>
+          </ul>
+
+        </ul>
+        <li> <a href="<?= $config->get('url').'index.php?controller=Reporte&action=index'?>" >
+            <i class='glyphicon glyphicon-list-alt'></i>REPORTES</a></li>
+
+        <li><a href="#">SUCURSAL: <?= User::singleton()->sucursal()?>  CAJA: <?=User::singleton()->caja();?> </a></li>
 
       </ul>
       <?php if(User::singleton()->isLogin())

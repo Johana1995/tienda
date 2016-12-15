@@ -16,7 +16,7 @@ $config->set('dbhost', 'localhost');
 $config->set('dbname', 'sistema');
 $config->set('dbuser', 'root');
 $config->set('dbport','3306');
-$config->set('dbpass', '');
+$config->set('dbpass', '123');
 /*
 $config->set('dbhost', 'mysql.hostinger.es');
 $config->set('dbname', 'u384178064_siste');

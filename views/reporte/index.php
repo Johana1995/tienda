@@ -17,7 +17,7 @@ include("navbar.php");
 <div class="panel panel-info">
     <div class="panel-heading">
         <h4><i class='glyphicon glyphicon-star-empty'></i>  <i class='glyphicon glyphicon-star-empty'></i>
-            Bienvenido al Controlador del la Pagina Web "Site" :)  <i class='glyphicon glyphicon-star-empty'></i>  <i class='glyphicon glyphicon-star-empty'></i> </h4>
+            Bienvenido a la seccion de Reportes del la Pagina Tiendas "Ivonne" :)  <i class='glyphicon glyphicon-star-empty'></i>  <i class='glyphicon glyphicon-star-empty'></i> </h4>
     </div>
     <div class="panel-body">
         <div class="container">
