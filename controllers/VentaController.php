@@ -34,7 +34,7 @@ class VentaController extends Controller
                 $clientes= $modelCliente->listar();
 
                 $model = new ProductoSucursal();
-                $productos = $model->listar(1);
+                $productos = $model->listar(User::singleton()->sucursal);
 
                 $modelEmpleado=new Empleado();
                 $empleados= $modelEmpleado->listar();
@@ -87,5 +87,11 @@ class VentaController extends Controller
             $mensa=$_GET['cliente'];
         }
         $this->view->show('venta/prueba',['m'=>$_GET['cliente']]);
+    }
+    public function clearTempAction()
+    {
+        $model = new ProductoVenta();
+        $model->limpiar();
+        header('Location: index.php?controller=Venta&action=create');
     }
 }

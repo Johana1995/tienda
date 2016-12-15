@@ -9,7 +9,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Simple Invoice</a>
+      <a class="navbar-brand" href="#">TIENDAS IVONNE</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -36,7 +36,7 @@
             <li><a href="<?= $config->get('url').'index.php?controller=Sucursal&action=index'?>">Sucursales</a></li>
             <li><a href="#">proveedores</a></li>
             <li><a href="<?= $config->get('url').'index.php?controller=Empleado&action=index'?>">Empleados</a></li>
-
+            <li><a href="<?= $config->get('url').'index.php?controller=Compra&action=index'?>">Compras</a></li>
             <li><a href="<?= $config->get('url').'index.php?controller=Cargo&action=index'?>">Cargos</a></li>
           </ul>
 
@@ -44,7 +44,7 @@
         <li> <a href="<?= $config->get('url').'index.php?controller=Reporte&action=index'?>" >
             <i class='glyphicon glyphicon-list-alt'></i>REPORTES</a></li>
 
-        <li><a href="#">SUCURSAL: <?= User::singleton()->sucursal()?>  CAJA: <?=User::singleton()->caja();?> </a></li>
+        <li><h4>SUCURSAL: <?= User::singleton()->sucursal()?>  CAJA: <?=User::singleton()->caja();?> </h4></li>
 
       </ul>
       <?php if(User::singleton()->isLogin())

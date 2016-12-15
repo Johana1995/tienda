@@ -4,7 +4,7 @@
 	  <meta charset="utf-8">
 	  <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	  <meta name="viewport" content="width=device-width, initial-scale=1">
-	  <title>Nueva-Venta</title>
+	  <title>Nueva-Compra</title>
     <?php include("head.php");?>
   </head>
   <body>
@@ -14,7 +14,7 @@
 	<div class="panel panel-info">
 		<div class="panel-heading">
 			<h4><i class='glyphicon glyphicon-edit'></i> Nueva </h4>
-			<a class="btn btn-danger" href="<?= $config->get('url').'index.php?controller=Venta&action=clearTemp'?>">REINICIAR</a>
+			<a class="btn btn-danger" href="<?= $config->get('url').'index.php?controller=Compra&action=clearTemp'?>">REINICIAR</a>
 		</div>
 		<div class="panel-body">
 		<?php
@@ -23,21 +23,15 @@
 			<form class="form-horizontal" role="form" action="" method="post" >
 				<div class="form-group row">
 
-                    <label for="nombre_cliente" class="col-md-1 control-label">Cliente</label>
-                    <div class="col-md-3">
-                        <input type="text" class="form-control input-sm" id="nombre_cliente" placeholder="Selecciona un cliente" required>
-                        <input id="id_cliente" name="id_cliente"  type="hidden">
-                    </div>
-                    <label for="tel1" class="col-md-1 control-label">NIT</label>
-                    <div class="col-md-2">
-                        <input type="text" class="form-control input-sm" id="tel1" placeholder="nit" readonly>
-                    </div>
-                    <label for="mail" class="col-md-1 control-label">Direccion</label>
-                    <div class="col-md-3">
-                        <input type="text" class="form-control input-sm" id="mail" placeholder="direccion" readonly>
-                    </div>
-
-				 </div>
+					<label for="vendedor" class="col-md-1 control-label">Proveedor</label>
+					<div class="col-md-3">
+						<select class="form-control input-sm" name="proveedor">
+							<?php foreach ($proveedores as $p):?>
+								<option value="<?= $p->id?>" >[<?= $p->nit.'], '.$p->encargado?></option>
+							<?php endforeach; ?>
+						</select>
+					</div>
+                   				 </div>
 				<div class="form-group row">
 					<label for="vendedor" class="col-md-1 control-label">Vendedor</label>
 					<div class="col-md-3">
@@ -58,17 +52,12 @@
 							<option value="1">Efectivo</option>
 						</select>
 					</div>
-                   <!-- --><div class="col-md-3">
-                        <select class='form-control input-sm' name="estado">
-                            <option value="0" selected>ACTIVO</option>
-                            <option value="1">INACTIVO</option>
-                        </select>
-                    </div>
+
 				</div>
 				<div class="col-md-12">
 					<div class="pull-right">
 						<button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" onclick="load()">
-						 <span class="glyphicon glyphicon-search"></span> Agregar productos
+						 <span class="glyphicon glyphicon-search"></span> Buscar productos
 						</button>
 						<button type="submit" class="btn btn-default">
 						  <span class="glyphicon glyphicon-print"></span> Guardar
@@ -140,7 +129,7 @@
 
 			$("#loader").fadeIn('slow');
 			$.ajax({
-				url:'./ajax/productos_factura.php?action=ajax',
+				url:'./ajax/productos_facturaC.php?action=ajax',
 				beforeSend: function(objeto){
 					$('#loader').html('<img src="./img/ajax-loader.gif"> Cargando...');
 				},
@@ -153,15 +142,13 @@
 		}
 		function agregar (id)
 		{
-
-
 			var unidades=document.getElementById('U_'+id).value;
 			var paquetes=document.getElementById('P_'+id).value;
 
-			alert('id='+id+' p->'+paquetes+' u->'+unidades);
+			alert('id='+id+' p---------------->'+paquetes+' u->'+unidades);
 			$.ajax({
 				type: "POST",
-				url: "./ajax/agregar_facturacion.php",
+				url: "./ajax/agregar_facturacionC.php",
 				data: "id="+id+"&paquetes="+paquetes+"&unidades="+unidades,
 				beforeSend: function(objeto){
 					$("#resultados").html("Mensaje: Cargando...");
@@ -177,7 +164,7 @@
 			alert('id'+id);
 			$.ajax({
 				type: "GET",
-				url: "./ajax/agregar_facturacion.php",
+				url: "./ajax/agregar_facturacionC.php",
 				data: "id="+id,
 				beforeSend: function(objeto){
 					$("#resultados").html("Mensaje: Cargando...");

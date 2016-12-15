@@ -310,3 +310,110 @@ CREATE TABLE tmp_venta(
   paquete INT UNSIGNED,
   unidad INT UNSIGNED
 );
+CREATE TABLE tmp_compra(
+  sucursal INT UNSIGNED,
+  producto INT UNSIGNED,
+  paquete INT UNSIGNED,
+  unidad INT UNSIGNED
+);
+CREATE TABLE compra
+(
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  numero VARCHAR(10),
+  fechahora DATETIME(0),
+  total DECIMAL(10,2),
+  empleado INT UNSIGNED,
+  proveedor INT UNSIGNED,
+  sucursal INT  UNSIGNED,
+  PRIMARY KEY (id),
+  KEY (empleado),
+  KEY (proveedor),
+  KEY (sucursal)
+)
+;
+
+
+CREATE TABLE detalle_compra
+(
+  producto INT UNSIGNED ,
+  compra INT UNSIGNED,
+  cantidadUnidad INT  ,
+  cantidadPack INT  ,
+  KEY (compra),
+  KEY (producto)
+)
+;
+
+
+CREATE TABLE proveedor
+(
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  nit VARCHAR(15),
+  encargado VARCHAR(100),
+  ubicacion VARCHAR(100),
+  email VARCHAR(50),
+  sitioweb VARCHAR(50),
+  telefono VARCHAR(8),
+  PRIMARY KEY (id)
+)
+;
+ALTER TABLE compra ADD CONSTRAINT FK_compra_empleado
+FOREIGN KEY (empleado) REFERENCES empleado (id)
+;
+
+ALTER TABLE compra ADD CONSTRAINT FK_compra_proveedor
+FOREIGN KEY (proveedor) REFERENCES proveedor (id)
+;
+
+ALTER TABLE compra ADD CONSTRAINT FK_compra_sucursal
+FOREIGN KEY (sucursal) REFERENCES sucursal (id)
+;
+
+ALTER TABLE detalle_compra ADD CONSTRAINT FK_detalle_compra_compra
+FOREIGN KEY (compra) REFERENCES compra (id)
+;
+
+ALTER TABLE detalle_compra ADD CONSTRAINT FK_detalle_compra_producto
+FOREIGN KEY (producto) REFERENCES producto (id)
+;
+CREATE TABLE detalle_traspaso
+(
+  producto INT UNSIGNED NOT NULL,
+  cantidadUnidad INT,
+  cantidadPack INT,
+  traspaso INT UNSIGNED,
+  KEY (traspaso)
+)
+;
+
+
+CREATE TABLE traspaso
+(
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  numero VARCHAR(10),
+  fechahora DATETIME(0),
+  emisor int UNSIGNED ,
+  receptor int  UNSIGNED  ,
+   empleado int UNSIGNED;
+  PRIMARY KEY (id, emisor, receptor),
+  KEY (receptor),
+  KEY (emisor)
+);
+ALTER TABLE traspaso ADD CONSTRAINT FK_traspaso_empleado
+FOREIGN KEY (empleado) REFERENCES empleado (id);
+;
+ALTER TABLE detalle_traspaso ADD CONSTRAINT FK_detalle_traspaso_producto
+FOREIGN KEY (producto) REFERENCES producto (id)
+;
+
+ALTER TABLE detalle_traspaso ADD CONSTRAINT FK_detalle_traspaso_traspaso
+FOREIGN KEY (traspaso) REFERENCES traspaso (id)
+;
+
+ALTER TABLE traspaso ADD CONSTRAINT FK_traspaso_sucursal
+FOREIGN KEY (receptor) REFERENCES sucursal (id)
+;
+
+ALTER TABLE traspaso ADD CONSTRAINT FK_traspaso_sucursalEmisor
+FOREIGN KEY (emisor) REFERENCES sucursal (id)
+;

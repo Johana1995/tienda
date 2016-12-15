@@ -142,4 +142,21 @@ class ProductoVenta extends Model
         }
 
     }
+    public function limpiar()
+    {
+        try {
+            $sucursal=User::singleton()->sucursal;
+            $caja=User::singleton()->caja;
+
+            $sql = 'DELETE FROM tmp_venta';
+            $sql .= ' WHERE sucursal=? and caja=?';
+            $params = [$sucursal,$caja];
+            $query = $this->db->prepare($sql);
+            $query->execute($params);
+            return ($query->rowCount() != 0);
+        }catch ( PDOException $e)
+        {
+            return false;
+        }
+    }
 }

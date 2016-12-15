@@ -5,7 +5,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Ventas</title>
+    <title>Traspasos</title>
     <?php include "head.php";?>
 
 </head>
@@ -37,11 +37,6 @@ include "navbar.php";
         <th>ID</th>
         <th>NUMERO</th>
         <th>DATE</th>
-        <th>SUBTOTAL</th>
-        <th>DESCUENTO</th>
-        <th>IVA</th>
-        <th>TOTAL</th>
-        <th>CLIENTE</th>
         <th>EMPLEADO</th>
         <th>CAJA</th>
         <th>SUCURSAL</th>

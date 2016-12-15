@@ -10,7 +10,7 @@ if($action == 'ajax'){
                q.cantUnidades as Upaquete,d.descripcion as depto,ps.cantidadExistente,
                ps.cantidadPackExistente,ps.cantidadUnidadMinima
                 from producto p, producto_sucursal ps,departamento d,paquete q
-                where p.id=ps.producto and ps.sucursal=1 and p.paquete_id=q.id and d.id=p.depto_id limit 30';
+                where p.id=ps.producto and ps.sucursal=1 and p.paquete_id=q.id and d.id=p.depto_id and ps.cantidadExistente>ps.cantidadUnidadMinima limit 30';
 	$query = $db->prepare($sql);
 	$query->execute();
 	$productos= $query->fetchAll(PDO::FETCH_OBJ);
