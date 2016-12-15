@@ -71,5 +71,9 @@ class SucursalController extends Controller
             ]);
         }
     }
+    public function stockAction()
+    {
+        
+    }
 
 }

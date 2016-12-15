@@ -74,7 +74,7 @@ include("navbar.php");
                                 <a href="<?= $config->get('url') . 'index.php?controller=Sucursal&action=deleteProducts&producto=' . $producto->id . '&sucursal=' . $sucursal->id ?>">Remove</a>
                             </td>
                             <td>
-                                <a href="<?= $config->get('url') . 'index.php?controller=Sucursal&action=deleteProducts&producto=' . $producto->id . '&sucursal=' . $sucursal->id ?>">Ver</a>
+                                <a href="<?= $config->get('url') . 'index.php?controller=Sucursal&action=stock&producto=' . $producto->id . '&sucursal=' . $sucursal->id ?>">Ingresar stock</a>
                             </td>
 
                         </tr>
