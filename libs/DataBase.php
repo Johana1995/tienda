@@ -7,7 +7,7 @@ class DataBase extends PDO
         'dbhost'=>'localhost',
         'dbname'=>'sistema',
         'dbuser'=> 'root',
-        'dbpass' => '123',
+        'dbpass' => '',
     ];
     public function __construct()
     {

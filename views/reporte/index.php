@@ -26,6 +26,8 @@ include("navbar.php");
                 <div class="col-xs-12 col-sm-6 col-md-4">
                     <ul class="nav nav-pills nav-stacked">
                         <li role="presentation"><h4><a target="_blank" href="<?= $config->get('url').'index.php?controller=Reporte&action=empleados'?>"><span class="glyphicon glyphicon-save-file" aria-hidden="true"></span> Generar Reporte de Empleados</a></h4></li>
+                        <li role="presentation"><h4><a target="_blank" href="<?= $config->get('url').'index.php?controller=Reporte&action=ventas'?>"><span class="glyphicon glyphicon-save-file" aria-hidden="true"></span> Generar Reporte de Ventas</a></h4></li>
+                        <li role="presentation"><h4><a target="_blank" href="<?= $config->get('url').'index.php?controller=Reporte&action=productos'?>"><span class="glyphicon glyphicon-save-file" aria-hidden="true"></span> Generar Reporte de Productos Para Reabastecimiento</a></h4></li>
                     </ul>
                 </div>
             </div>
